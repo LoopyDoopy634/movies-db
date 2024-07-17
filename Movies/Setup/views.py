@@ -38,3 +38,23 @@ def login_view(request):
 def home_page(request):
     # Render your home page template
     return render(request, 'home.html')
+
+import requests
+from django.http import JsonResponse
+from django.conf import settings
+
+GITHUB_REPO_OWNER = 'LoopyDoopy634'
+GITHUB_REPO_NAME = 'movies-db'
+GITHUB_API_URL = f'https://api.github.com/repos/{GITHUB_REPO_OWNER}/{GITHUB_REPO_NAME}/commits'
+
+def fetch_commits():
+    response = requests.get(GITHUB_API_URL)
+    commits = response.json()
+    return commits
+
+def commit_list(request):
+    commits = fetch_commits()
+    context = {
+        'commits': commits
+    }
+    return render(request, 'commit_list.html', context)

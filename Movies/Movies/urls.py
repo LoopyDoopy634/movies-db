@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from Setup import views
+from Setup import views, feeds
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.landing_page, name='landing_page'),
@@ -24,4 +24,6 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('login/', views.login_view, name='login'),
     path('homepage/', views.home_page, name='homepage'),
+    path('commits/', views.commit_list, name='commit_list'),
+    path('rss/', feeds.LatestCommitsFeed(), name='rss_feed'),
 ]
