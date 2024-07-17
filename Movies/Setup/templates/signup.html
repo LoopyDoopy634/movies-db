@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MovieDB - Welcome</title>
+    <title>Sign Up - MovieDB</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
@@ -58,22 +58,51 @@
             color: #e8491d;
             font-weight: bold;
         }
-        .description {
-            max-width: 800px;
+        .form-container {
+            margin-top: 50px;
+        }
+        form {
+            max-width: 400px;
             margin: auto;
-            text-align: center;
-            padding: 50px 20px;
+            padding: 20px;
             background: #fff;
             border-radius: 5px;
             box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-            margin-top: 50px;
         }
-        .description h1 {
-            margin-bottom: 20px;
+        form label {
+            display: block;
+            margin-bottom: 10px;
         }
-        .description p {
-            font-size: 18px;
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        form button[type="submit"] {
+            background: #e8491d;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        form button[type="submit"]:hover {
+            background: #333;
+        }
+        .required-info {
+            display: none;
+            font-size: 12px;
+            margin-top: -5px;
             color: #666;
+        }
+        form label:hover .required-info {
+            display: inline-block;
         }
         footer {
             position: fixed;
@@ -97,11 +126,11 @@
     <header>
         <div class="container">
             <div id="branding">
-                <h1><a href="{% url 'landing_page' %}">MovieDB</a></h1>
+                <h1><a href="{% url 'home' %}">MovieDB</a></h1>
             </div>
             <nav>
                 <ul>
-                    <li><a href="{% url 'landing_page' %}" class="current">Home</a></li>
+                    <li><a href="{% url 'home' %}" class="current">Home</a></li>
                     <li><a href="{% url 'signup' %}">Sign Up</a></li>
                 </ul>
             </nav>
@@ -109,9 +138,28 @@
     </header>
 
     <main class="container">
-        <section class="description">
-            <h1>Welcome to MovieDB</h1>
-            <p>Your one-stop destination for movie reviews and descriptions. Join our community to share your thoughts on the latest movies and discover what others are saying.</p>
+        <section class="form-container">
+            <h1>Sign Up</h1>
+            <form method="post">
+                {% csrf_token %}
+                <label for="id_username">Username
+                    <span class="required-info"> (Required)</span>
+                    <input type="text" name="username" id="id_username" required>
+                </label>
+                <label for="id_email">Email
+                    <span class="required-info"> (Required)</span>
+                    <input type="email" name="email" id="id_email" required>
+                </label>
+                <label for="id_password1">Password
+                    <span class="required-info"> (Required)</span>
+                    <input type="password" name="password1" id="id_password1" required>
+                </label>
+                <label for="id_password2">Confirm Password
+                    <span class="required-info"> (Required)</span>
+                    <input type="password" name="password2" id="id_password2" required>
+                </label>
+                <button type="submit">Sign Up</button>
+            </form>
         </section>
     </main>
 
