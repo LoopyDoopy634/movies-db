@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MovieDB - Welcome</title>
+    <title>Login - MovieDB</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
@@ -58,22 +58,42 @@
             color: #e8491d;
             font-weight: bold;
         }
-        .description {
-            max-width: 800px;
+        .form-container {
+            max-width: 400px;
             margin: auto;
-            text-align: center;
-            padding: 50px 20px;
+            padding: 20px;
             background: #fff;
             border-radius: 5px;
             box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
             margin-top: 50px;
         }
-        .description h1 {
+        form {
             margin-bottom: 20px;
         }
-        .description p {
-            font-size: 18px;
-            color: #666;
+        form label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        form input[type="text"],
+        form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        form button[type="submit"] {
+            background: #e8491d;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        form button[type="submit"]:hover {
+            background: #333;
         }
         footer {
             position: fixed;
@@ -101,18 +121,24 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="{% url 'landing_page' %}" class="current">Home</a></li>
+                    <li><a href="{% url 'landing_page' %}">Home</a></li>
                     <li><a href="{% url 'signup' %}">Sign Up</a></li>
-                    <li><a href="{% url 'login' %}">Login</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <main class="container">
-        <section class="description">
-            <h1>Welcome to MovieDB</h1>
-            <p>Your one-stop destination for movie reviews and descriptions. Join our community to share your thoughts on the latest movies and discover what others are saying.</p>
+        <section class="form-container">
+            <h1>Login</h1>
+            <form method="post">
+                {% csrf_token %}
+                <label for="id_username">Username</label>
+                <input type="text" name="username" id="id_username" required>
+                <label for="id_password">Password</label>
+                <input type="password" name="password" id="id_password" required>
+                <button type="submit">Login</button>
+            </form>
         </section>
     </main>
 
