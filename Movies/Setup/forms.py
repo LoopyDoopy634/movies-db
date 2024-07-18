@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import UserReview
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -8,3 +9,13 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
+
+
+class UserReviewForm(forms.ModelForm):
+    class Meta:
+        model = UserReview
+        fields = ['username', 'rating']
+        widgets = {
+            'rating': forms.NumberInput(attrs={'min': 1, 'max': 5}),
+        }
+

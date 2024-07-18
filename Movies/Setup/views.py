@@ -61,11 +61,36 @@ def commit_list(request):
     return render(request, 'commit_list.html', context)
 
 from django.shortcuts import get_object_or_404
-from .models import Movie
+from .models import Movie, UserReview
+from .forms import SignUpForm, UserReviewForm  
 
 def movie_detail(request, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)
-    return render(request, 'movie_detail.html', {'movie': movie})
+    reviews = movie.reviews.all()
+    user_review = None
+
+    if request.method == 'POST':
+        form = UserReviewForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            existing_review = UserReview.objects.filter(movie=movie, username=username).first()
+            if existing_review:
+                user_review = existing_review
+            else:
+                user_review = form.save(commit=False)
+                user_review.movie = movie
+                user_review.save()
+                return redirect('movie_detail', movie_id=movie.id)
+    else:
+        form = UserReviewForm()
+
+    context = {
+        'movie': movie,
+        'reviews': reviews,
+        'form': form,
+        'user_review': user_review,
+    }
+    return render(request, 'movie_detail.html', context)
 
 from .models import Movie
 

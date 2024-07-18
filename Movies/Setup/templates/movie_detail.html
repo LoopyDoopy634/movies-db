@@ -87,7 +87,25 @@
         .movie-description {
             margin-top: 20px;
         }
-
+        .review-section {
+            margin-top: 30px;
+        }
+        .review-form {
+            margin-top: 20px;
+        }
+        .review {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .review h4 {
+            margin: 0;
+        }
+        .review p {
+            margin: 5px 0 0;
+        }
     </style>
 </head>
 <body>
@@ -118,6 +136,29 @@
             {% endif %}
             <div class="movie-description">
                 
+            </div>
+            <div class="review-section">
+                <h2>User Reviews</h2>
+                {% for review in reviews %}
+                <div class="review">
+                    <h4>{{ review.username }}</h4>
+                    <p>Rating: {{ review.rating }}</p>
+                </div>
+                {% empty %}
+                <p>No reviews yet.</p>
+                {% endfor %}
+            </div>
+            <div class="review-form">
+                <h2>Submit Your Review</h2>
+                {% if user_review %}
+                <p>You have already reviewed this movie with a rating of {{ user_review.rating }}.</p>
+                {% else %}
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Submit</button>
+                </form>
+                {% endif %}
             </div>
         </section>
     </main>
