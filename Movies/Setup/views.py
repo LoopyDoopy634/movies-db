@@ -13,7 +13,7 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
-            return redirect('home')
+            return redirect('login')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
@@ -29,7 +29,7 @@ def login_view(request):
         if user is not None:
             login(request, user)
             # Redirect to home page upon successful login
-            return redirect('home')  # Change 'home' to your desired URL name for home page
+            return redirect('homepage')  # Change 'home' to your desired URL name for home page
         else:
             messages.error(request, 'Invalid username or password.')
 
