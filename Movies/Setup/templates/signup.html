@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - MovieDB</title>
+    <title>Latest Updates - MovieDB</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
@@ -58,52 +58,44 @@
             color: #e8491d;
             font-weight: bold;
         }
-        .form-container {
-            margin-top: 50px;
-        }
-        form {
-            max-width: 400px;
-            margin: auto;
+        main {
             padding: 20px;
-            background: #fff;
+        }
+        h1 {
+            color: #333;
+            font-size: 28px;
+            text-align: center;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+        ul li {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
             border-radius: 5px;
             box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
         }
-        form label {
-            display: block;
-            margin-bottom: 10px;
+        ul li strong {
+            color: #333;
         }
-        form input[type="text"],
-        form input[type="email"],
-        form input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            box-sizing: border-box;
+        ul li a {
+            color: #007bff;
+            text-decoration: none;
         }
-        form button[type="submit"] {
-            background: #e8491d;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 3px;
-            cursor: pointer;
-            transition: background 0.3s ease;
+        ul li a:hover {
+            text-decoration: underline;
         }
-        form button[type="submit"]:hover {
-            background: #333;
-        }
-        .required-info {
-            display: none;
-            font-size: 12px;
-            margin-top: -5px;
+        ul li div small {
             color: #666;
         }
-        form label:hover .required-info {
-            display: inline-block;
+        .form-container {
+            margin-top: 50px;
         }
+        
     </style>
 </head>
 <body>
@@ -113,38 +105,26 @@
                 <h1><a href="{% url 'home' %}">MovieDB</a></h1>
             </div>
             <nav>
-                <ul>
-                    <li><a href="{% url 'home' %}" class="current">Home</a></li>
-                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                <ul class="header-nav">
+                    <li><a href="{% url 'homepage' %}">Home</a></li>
+                    <li><a href="{% url 'search' %}">Search</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <main class="container">
-        <section class="form-container">
-            <h1>Sign Up</h1>
-            <form method="post">
-                {% csrf_token %}
-                <label for="id_username">Username
-                    <span class="required-info"> (Required)</span>
-                    <input type="text" name="username" id="id_username" required>
-                </label>
-                <label for="id_email">Email
-                    <span class="required-info"> (Required)</span>
-                    <input type="email" name="email" id="id_email" required>
-                </label>
-                <label for="id_password1">Password
-                    <span class="required-info"> (Required)</span>
-                    <input type="password" name="password1" id="id_password1" required>
-                </label>
-                <label for="id_password2">Confirm Password
-                    <span class="required-info"> (Required)</span>
-                    <input type="password" name="password2" id="id_password2" required>
-                </label>
-                <button type="submit">Sign Up</button>
-            </form>
-        </section>
+        <h1>Latest Updates</h1>
+        <ul>
+            {% for commit in commits %}
+            <li>
+                <strong>{{ commit.commit.author.name }}</strong> - 
+                {{ commit.commit.message }} 
+                <a href="{{ commit.html_url }}">(View Commit)</a>
+                <div><small>{{ commit.commit.author.date }}</small></div>
+            </li>
+            {% endfor %}
+        </ul>
     </main>
 
 </body>

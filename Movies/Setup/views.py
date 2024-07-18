@@ -67,3 +67,11 @@ def movie_detail(request, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)
     return render(request, 'movie_detail.html', {'movie': movie})
 
+from .models import Movie
+
+def search(request):
+    query = request.GET.get('q')
+    results = []
+    if query:
+        results = Movie.objects.filter(title__icontains=query)
+    return render(request, 'search.html', {'results': results, 'query': query})

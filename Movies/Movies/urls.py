@@ -30,6 +30,7 @@ urlpatterns = [
     path('commits/', views.commit_list, name='commit_list'),
     path('rss/', feeds.LatestCommitsFeed(), name='rss_feed'),
     path('<int:movie_id>/', views.movie_detail, name='movie_detail'),
+    path('search/', views.search, name='search'),
 ]
 
 if settings.DEBUG:
