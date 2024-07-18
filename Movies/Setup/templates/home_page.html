@@ -1,3 +1,5 @@
+<!-- home.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,13 +7,131 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MovieDB - Home</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #444 3px solid;
+        }
+        header a {
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+        header ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        header li {
+            float: left;
+            display: inline;
+            padding: 0 20px 0 20px;
+        }
+        header #branding {
+            float: left;
+        }
+        header #branding h1 {
+            margin: 0;
+        }
+        header nav {
+            float: right;
+            margin-top: 10px;
+        }
+        header .highlight, header .current a {
+            color: #e8491d;
+            font-weight: bold;
+        }
+        .description {
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+            padding: 50px 20px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+            margin-top: 50px;
+        }
+        .description h1 {
+            margin-bottom: 20px;
+        }
+        .description p {
+            font-size: 18px;
+            color: #666;
+        }
+        .movie-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        .movie-list li {
+            margin-bottom: 20px;
+            overflow: hidden;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        }
+        .movie-list img {
+            max-width: 150px;
+            height: auto;
+            margin-right: 20px;
+            float: left;
+        }
+        .movie-details {
+            overflow: hidden;
+        }
+        .movie-title {
+            font-size: 24px;
+            margin: 0 0 10px;
+            color: #333;
+        }
+        .movie-title a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .movie-details p {
+            margin: 5px 0;
+            color: #666;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 50px;
+        }
+        footer .social-media a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 20px;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
     <header>
-        <div class="logo">
-            <a href="{% url 'landing_page' %}">MovieDB</a>
+        <div id="branding">
+            <h1><a href="{% url 'landing_page' %}">MovieDB</a></h1>
         </div>
         <nav>
             <ul>
@@ -23,12 +143,31 @@
     </header>
 
     <!-- Main Content -->
-    <main>
-        <section>
+    <main class="container">
+        <section class="description">
             <h1>Welcome to MovieDB!</h1>
             <p>This is your personalized home page.</p>
-            <!-- Add more content specific to the home page -->
         </section>
+
+        <!-- Movie List -->
+        <ul class="movie-list">
+            {% for movie in movies %}
+            <li>
+                <div class="movie-info">
+                    {% if movie.image %}
+                    <img src="{{ movie.image.url }}" alt="{{ movie.title }}">
+                    {% else %}
+                    <img src="{% static 'img/placeholder.jpg' %}" alt="Placeholder">
+                    {% endif %}
+                    <div class="movie-details">
+                        <h2 class="movie-title"><a href="{% url 'movie_detail' movie.id %}">{{ movie.title }}</a></h2>
+                        <p><strong>Director:</strong> {{ movie.director }}</p>
+                        <p><strong>Year Released:</strong> {{ movie.year_released }}</p>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
     </main>
 
     <!-- Footer -->

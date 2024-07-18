@@ -17,6 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from Setup import views, feeds
+from django.conf.urls.static import static
+from django.conf import settings
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.landing_page, name='landing_page'),
@@ -26,4 +29,8 @@ urlpatterns = [
     path('homepage/', views.home_page, name='homepage'),
     path('commits/', views.commit_list, name='commit_list'),
     path('rss/', feeds.LatestCommitsFeed(), name='rss_feed'),
+    path('<int:movie_id>/', views.movie_detail, name='movie_detail'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

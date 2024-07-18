@@ -37,7 +37,8 @@ def login_view(request):
 
 def home_page(request):
     # Render your home page template
-    return render(request, 'home.html')
+    movies = Movie.objects.all()  # Fetch all movies from the database
+    return render(request, 'home_page.html', {'movies': movies})
 
 import requests
 from django.http import JsonResponse
@@ -58,3 +59,11 @@ def commit_list(request):
         'commits': commits
     }
     return render(request, 'commit_list.html', context)
+
+from django.shortcuts import get_object_or_404
+from .models import Movie
+
+def movie_detail(request, movie_id):
+    movie = get_object_or_404(Movie, pk=movie_id)
+    return render(request, 'movie_detail.html', {'movie': movie})
+

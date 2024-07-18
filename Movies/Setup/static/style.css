@@ -1,23 +1,27 @@
+/* style.css */
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    background-color: #f4f4f4;
 }
 
 header {
     background-color: #333;
-    color: #fff;
-    padding: 10px 20px;
+    color: white;
+    padding: 10px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 header .logo a {
-    color: #fff;
+    color: white;
     text-decoration: none;
     font-size: 24px;
+    font-weight: bold;
+    margin-left: 20px;
 }
 
 header nav ul {
@@ -28,57 +32,99 @@ header nav ul {
 }
 
 header nav ul li {
-    margin: 0 10px;
+    margin-left: 20px;
 }
 
 header nav ul li a {
-    color: #fff;
+    color: white;
     text-decoration: none;
+    font-size: 16px;
+}
+
+header nav ul li a:hover {
+    text-decoration: underline;
 }
 
 main {
     padding: 20px;
-    text-align: center;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.description {
-    margin: 50px 0;
+h1 {
+    color: #333;
 }
 
-.description h1 {
-    font-size: 36px;
+.movie-list {
+    list-style: none;
+    padding: 0;
+}
+
+.movie-list li {
     margin-bottom: 20px;
+    display: flex;
+    align-items: flex-start;
 }
 
-.description p {
-    font-size: 18px;
-    margin-bottom: 20px;
+.movie-info img {
+    max-width: 150px;
+    height: auto;
+    margin-right: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
-.cta {
-    margin: 20px 0;
+.movie-details {
+    max-width: calc(100% - 170px);
 }
 
-.cta .btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #333;
-    color: #fff;
+.movie-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin: 0 0 10px;
+}
+
+.movie-title a {
+    color: #333;
     text-decoration: none;
-    font-size: 16px;
-    margin: 10px;
-    border-radius: 5px;
+}
+
+.movie-title a:hover {
+    text-decoration: underline;
+}
+
+.movie-details p {
+    margin: 5px 0;
+    color: #666;
 }
 
 footer {
     background-color: #333;
-    color: #fff;
-    text-align: center;
+    color: white;
     padding: 10px 0;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+footer p {
+    margin: 0;
+}
+
+footer .social-media {
+    margin-top: 10px;
 }
 
 footer .social-media a {
-    margin: 0 10px;
-    color: #fff;
+    color: white;
     text-decoration: none;
+    margin: 0 10px;
+}
+
+footer .social-media a:hover {
+    text-decoration: underline;
 }

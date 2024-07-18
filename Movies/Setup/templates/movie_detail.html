@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MovieDB - Welcome</title>
+    <title>{{ movie.title }} - MovieDB</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
@@ -14,6 +14,9 @@
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure the body covers the full height of the viewport */
         }
         .container {
             width: 80%;
@@ -58,32 +61,39 @@
             color: #e8491d;
             font-weight: bold;
         }
-        .description {
+        .movie-details {
             max-width: 800px;
             margin: auto;
-            text-align: center;
             padding: 50px 20px;
             background: #fff;
             border-radius: 5px;
             box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
             margin-top: 50px;
         }
-        .description h1 {
+        .movie-details h1 {
             margin-bottom: 20px;
         }
-        .description p {
+        .movie-details p {
             font-size: 18px;
             color: #666;
         }
+        .movie-details img {
+            max-width: 150px; /* Ensure image responsiveness */
+            height: auto;
+            display: block;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .movie-description {
+            margin-top: 20px;
+        }
         footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
             background-color: #333;
             color: white;
             text-align: center;
             padding: 10px 0;
+            width: 100%;
+            flex-shrink: 0; /* Prevent footer from shrinking */
         }
         footer .social-media a {
             color: white;
@@ -97,22 +107,32 @@
     <header>
         <div class="container">
             <div id="branding">
-                <h1><a href="{% url 'landing_page' %}">MovieDB</a></h1>
+                <h1><a href="{% url 'home' %}">MovieDB</a></h1>
             </div>
             <nav>
                 <ul>
-                    <li><a href="{% url 'landing_page' %}" class="current">Home</a></li>
-                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
-                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a class="nav-link" href="{% url 'homepage' %}">Home</a></li>
+                    <li><a class="nav-link" href="{% url 'signup' %}">Sign Up</a></li>
+                    <li><a class="nav-link" href="{% url 'login' %}">Login</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <main class="container">
-        <section class="description">
-            <h1>Welcome to MovieDB</h1>
-            <p>Your one-stop destination for movie reviews and descriptions. Join our community to share your thoughts on the latest movies and discover what others are saying.</p>
+        <section class="movie-details">
+            <h1>{{ movie.title }}</h1>
+            <p><strong>Year Released:</strong> {{ movie.year_released }}</p>
+            <p><strong>Director:</strong> {{ movie.director }}</p>
+            <p>{{ movie.description }}</p>
+            {% if movie.image %}
+            <img src="{{ movie.image.url }}" alt="{{ movie.title }}">
+            {% else %}
+            <img src="{% static 'img/placeholder.jpg' %}" alt="Placeholder">
+            {% endif %}
+            <div class="movie-description">
+                
+            </div>
         </section>
     </main>
 
