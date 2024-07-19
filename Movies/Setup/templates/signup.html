@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Latest Updates - MovieDB</title>
+    <title>Sign Up - MovieDB</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
@@ -58,44 +58,68 @@
             color: #e8491d;
             font-weight: bold;
         }
-        main {
-            padding: 20px;
-        }
-        h1 {
-            color: #333;
-            font-size: 28px;
-            text-align: center;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-            text-align: left;
-        }
-        ul li {
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-        }
-        ul li strong {
-            color: #333;
-        }
-        ul li a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        ul li a:hover {
-            text-decoration: underline;
-        }
-        ul li div small {
-            color: #666;
-        }
         .form-container {
             margin-top: 50px;
         }
-        
+        form {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        }
+        form label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        form button[type="submit"] {
+            background: #e8491d;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        form button[type="submit"]:hover {
+            background: #333;
+        }
+        .required-info {
+            display: none;
+            font-size: 12px;
+            margin-top: -5px;
+            color: #666;
+        }
+        form label:hover .required-info {
+            display: inline-block;
+        }
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        footer .social-media a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
@@ -105,27 +129,49 @@
                 <h1><a href="{% url 'home' %}">MovieDB</a></h1>
             </div>
             <nav>
-                <ul class="header-nav">
-                    <li><a href="{% url 'homepage' %}">Home</a></li>
-                    <li><a href="{% url 'search' %}">Search</a></li>
+                <ul>
+                    <li><a href="{% url 'home' %}" class="current">Home</a></li>
+                    <li><a href="{% url 'login' %}">Login</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <main class="container">
-        <h1>Latest Updates</h1>
-        <ul>
-            {% for commit in commits %}
-            <li>
-                <strong>{{ commit.commit.author.name }}</strong> - 
-                {{ commit.commit.message }} 
-                <a href="{{ commit.html_url }}">(View Commit)</a>
-                <div><small>{{ commit.commit.author.date }}</small></div>
-            </li>
-            {% endfor %}
-        </ul>
+        <section class="form-container">
+            <h1>Sign Up</h1>
+            <form method="post">
+                {% csrf_token %}
+                <label for="id_username">Username
+                    <span class="required-info"> (Required)</span>
+                    <input type="text" name="username" id="id_username" required>
+                </label>
+                <label for="id_email">Email
+                    <span class="required-info"> (Required)</span>
+                    <input type="email" name="email" id="id_email" required>
+                </label>
+                <label for="id_password1">Password
+                    <span class="required-info"> (Required)</span>
+                    <input type="password" name="password1" id="id_password1" required>
+                </label>
+                <label for="id_password2">Confirm Password
+                    <span class="required-info"> (Required)</span>
+                    <input type="password" name="password2" id="id_password2" required>
+                </label>
+                <button type="submit">Sign Up</button>
+            </form>
+        </section>
     </main>
 
+    <footer>
+        <div class="container">
+            <div class="social-media">
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+            </div>
+            <p>&copy; 2024 MovieDB. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
