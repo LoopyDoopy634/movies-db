@@ -36,8 +36,7 @@ def login_view(request):
     return render(request, 'login.html')
 
 def home_page(request):
-    # Render your home page template
-    movies = Movie.objects.all()  # Fetch all movies from the database
+    movies = Movie.objects.all()
     return render(request, 'home_page.html', {'movies': movies})
 
 import requests
@@ -96,7 +95,5 @@ from .models import Movie
 
 def search(request):
     query = request.GET.get('q')
-    results = []
-    if query:
-        results = Movie.objects.filter(title__icontains=query)
-    return render(request, 'search.html', {'results': results, 'query': query})
+    movies = Movie.objects.filter(title__icontains=query) if query else []
+    return render(request, 'search.html', {'movies': movies})

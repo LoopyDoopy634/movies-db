@@ -1,5 +1,3 @@
-<!-- home.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MovieDB - Home</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
-        /* Global styles */
+        /* Add your new styles here */
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
@@ -60,101 +58,64 @@
             color: #e8491d;
             font-weight: bold;
         }
-        .description {
-            max-width: 800px;
-            margin: auto;
-            text-align: center;
-            padding: 50px 20px;
+        .movie-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .movie-card {
             background: #fff;
             border-radius: 5px;
             box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-            margin-top: 50px;
-        }
-        .description h1 {
-            margin-bottom: 20px;
-        }
-        .description p {
-            font-size: 18px;
-            color: #666;
-        }
-        .movie-list {
-            list-style: none;
-            padding: 0;
-            margin: 20px 0;
-        }
-        .movie-list li {
-            margin-bottom: 20px;
             overflow: hidden;
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+            width: 200px;
+            transition: transform 0.3s;
         }
-        .movie-list img {
-            max-width: 150px;
+        .movie-card:hover {
+            transform: scale(1.05);
+        }
+        .movie-card img {
+            width: 100%;
             height: auto;
-            margin-right: 20px;
-            float: left;
         }
-        .movie-details {
-            overflow: hidden;
+        .movie-card h2 {
+            font-size: 18px;
+            margin: 10px;
         }
-        .movie-title {
-            font-size: 24px;
-            margin: 0 0 10px;
-            color: #333;
-        }
-        .movie-title a {
-            text-decoration: none;
-            color: inherit;
-        }
-        .movie-details p {
-            margin: 5px 0;
+        .movie-card p {
+            font-size: 14px;
+            margin: 10px;
             color: #666;
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
-        <div id="branding">
-            <h1><a href="{% url 'landing_page' %}">MovieDB</a></h1>
+        <div class="container">
+            <div id="branding">
+                <h1><a href="{% url 'home' %}">MovieDB</a></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'homepage' %}">Home</a></li>
+                    <li><a href="{% url 'search' %}">Search</a></li>
+                </ul>
+            </nav>
         </div>
-        <nav>
-            <ul>
-                <li><a href="{% url 'search' %}">Search</a></li>
-                <!-- Add more navigation links as needed -->
-            </ul>
-        </nav>
     </header>
 
-    <!-- Main Content -->
     <main class="container">
-        <section class="description">
-            <h1>Welcome to MovieDB!</h1>
-            <p>This is your personalized home page.</p>
-        </section>
-
-        <!-- Movie List -->
-        <ul class="movie-list">
+        <h1>Popular Movies</h1>
+        <div class="movie-grid">
             {% for movie in movies %}
-            <li>
-                <div class="movie-info">
-                    {% if movie.image %}
-                    <img src="{{ movie.image.url }}" alt="{{ movie.title }}">
-                    {% else %}
-                    <img src="{% static 'img/placeholder.jpg' %}" alt="Placeholder">
-                    {% endif %}
-                    <div class="movie-details">
-                        <h2 class="movie-title"><a href="{% url 'movie_detail' movie.id %}">{{ movie.title }}</a></h2>
-                        <p><strong>Director:</strong> {{ movie.director }}</p>
-                        <p><strong>Year Released:</strong> {{ movie.year_released }}</p>
-                    </div>
-                </div>
-            </li>
+            <div class="movie-card">
+                <img src="https://image.tmdb.org/t/p/w500{{ movie.image }}" alt="{{ movie.title }}">
+                <h2>{{ movie.title }}</h2>
+                <p>{{ movie.year_released }}</p>
+            </div>
             {% endfor %}
-        </ul>
+        </div>
     </main>
-
 </body>
 </html>
