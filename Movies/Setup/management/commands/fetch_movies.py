@@ -6,7 +6,7 @@ class Command(BaseCommand):
     help = 'Fetches all movies from TMDb API and saves them to the database'
 
     def handle(self, *args, **kwargs):
-        api_key = '0fcd9d4253469cd123f19d48adbd7e57'
+        api_key = 'Your API key'
         base_url = 'https://api.themoviedb.org/3/movie/popular'
         page = 1
         total_movies = 0
