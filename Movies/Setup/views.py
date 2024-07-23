@@ -93,7 +93,58 @@ def movie_detail(request, movie_id):
 
 from .models import Movie
 
-def search(request):
-    query = request.GET.get('q')
-    movies = Movie.objects.filter(title__icontains=query) if query else []
-    return render(request, 'search.html', {'movies': movies})
+from django.shortcuts import render
+from .models import Movie
+
+def search_results(request):
+    query = request.GET.get('query')
+    if query:
+        movies = Movie.objects.filter(title__icontains=query)
+        print(f"Search query: {query}")
+        print(f"Movies found: {movies.count()}")
+    else:
+        movies = []
+    return render(request, 'search_results.html', {'movies': movies})
+
+
+
+
+from django.shortcuts import render
+from .models import Movie
+
+def home(request):
+    year = request.GET.get('year')
+    if year:
+        movies = Movie.objects.filter(year_released=year)
+    else:
+        movies = Movie.objects.all()  # Or an empty QuerySet if you don't want to show any movies initially
+    return render(request, 'home.html', {'movies': movies})
+
+from django.shortcuts import render
+from .models import Movie
+
+
+def search_by_year(request):
+    return render(request, 'search_by_year.html')
+
+def search_by_year_results(request):
+    year = request.GET.get('year')
+    if year:
+        movies = Movie.objects.filter(year_released=year)
+        print(f"Search year: {year}")
+        print(f"Movies found: {movies.count()}")
+    else:
+        movies = []
+    return render(request, 'search_results.html', {'movies': movies})
+
+import random
+
+
+def random_movie(request):
+    return render(request, 'random_movie.html')
+
+def random_movie_results(request):
+    movies = Movie.objects.all()
+    movie = random.choice(movies) if movies else None
+    return render(request, 'random_movie.html', {'movie': movie})
+

@@ -1,0 +1,42 @@
+/* Add any additional styles specific to the homepage here */
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background: #333;
+    color: #fff;
+    padding: 10px 0;
+    border-bottom: 3px solid #444;
+}
+
+header h1 {
+    margin: 0;
+}
+
+.hero-section {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.hero-section h1 {
+    font-size: 48px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #e8491d;
+    margin-bottom: 20px;
+}
+
+.hero-section .btn {
+    background-color: #e8491d;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.hero-section .btn:hover {
+    background-color: #333;
+}

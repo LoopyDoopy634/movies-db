@@ -7,7 +7,6 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
-        /* Add your search results styles here */
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
@@ -87,25 +86,11 @@
             margin: 10px;
             color: #666;
         }
-        .search-container {
-            margin: 20px 0;
-        }
-        .search-container input[type="text"] {
-            padding: 10px;
-            font-size: 16px;
-            width: 80%;
-            margin-right: 10px;
-        }
-        .search-container button {
-            padding: 10px;
-            font-size: 16px;
-            background: #333;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-        .search-container button:hover {
-            background: #444;
+        .no-results {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 18px;
+            color: #666;
         }
     </style>
 </head>
@@ -119,35 +104,29 @@
                 <ul>
                     <li><a href="{% url 'homepage' %}">Home</a></li>
                     <li><a href="{% url 'search' %}">Search</a></li>
+                    <li><a href="{% url 'search_by_year' %}">Search by Year</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <main class="container">
-        <div class="search-container">
-            <form method="get" action="{% url 'search_results' %}">
-                <input type="text" name="query" placeholder="Search for a movie...">
-                <button type="submit">Search</button>
-            </form>
-        </div>
-
         <h1>Search Results</h1>
+        {% if movies %}
         <div class="movie-grid">
-            {% if movies %}
-                {% for movie in movies %}
-                <div class="movie-card">
-                    <a href="{% url 'movie_detail' movie.id %}">
-                        <img src="https://image.tmdb.org/t/p/w500{{ movie.image }}" alt="{{ movie.title }}">
-                        <h2>{{ movie.title }}</h2>
-                    </a>
-                    <p>{{ movie.year_released }}</p>
-                </div>
-                {% endfor %}
-            {% else %}
-                <p>No results found.</p>
-            {% endif %}
+            {% for movie in movies %}
+            <div class="movie-card">
+                <img src="https://image.tmdb.org/t/p/w500{{ movie.image }}" alt="{{ movie.title }}">
+                <h2>{{ movie.title }}</h2>
+                <p>{{ movie.year_released }}</p>
+            </div>
+            {% endfor %}
         </div>
+        {% else %}
+        <div class="no-results">
+            <p>No movies found for the year {{ request.GET.year }}.</p>
+        </div>
+        {% endif %}
     </main>
 </body>
 </html>

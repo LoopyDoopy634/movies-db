@@ -30,7 +30,12 @@ urlpatterns = [
     path('commits/', views.commit_list, name='commit_list'),
     path('rss/', feeds.LatestCommitsFeed(), name='rss_feed'),
     path('<int:movie_id>/', views.movie_detail, name='movie_detail'),
-    path('search/', views.search, name='search'),
+    path('search/', views.search_results, name='search'),
+    path('h/', views.home, name="h"),
+    path('search_by_year/', views.search_by_year, name='search_by_year'),
+    path('random_movie/', views.random_movie, name='random_movie'),
+    path('random_movie_results/', views.random_movie_results, name='random_movie_results'),
+    path('search_by_year_results/', views.search_by_year_results, name='search_by_year_results'),
 ]
 
 if settings.DEBUG:

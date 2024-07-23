@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Results - MovieDB</title>
+    <title>MovieDB - Home</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
-        /* Add your search results styles here */
+        /* Existing styles */
         body {
             font-family: Arial, sans-serif;
+            line-height: 1.6;
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
@@ -57,6 +58,47 @@
             color: #e8491d;
             font-weight: bold;
         }
+
+        /* New styles */
+        .search-section {
+            margin-top: 50px;
+            text-align: center;
+        }
+        .search-section h1 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .search-form {
+            display: inline-block;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+        }
+        .search-form input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        .search-form button {
+            background: #e8491d;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+        .search-form button:hover {
+            background: #333;
+        }
         .movie-grid {
             display: flex;
             flex-wrap: wrap;
@@ -87,26 +129,6 @@
             margin: 10px;
             color: #666;
         }
-        .search-container {
-            margin: 20px 0;
-        }
-        .search-container input[type="text"] {
-            padding: 10px;
-            font-size: 16px;
-            width: 80%;
-            margin-right: 10px;
-        }
-        .search-container button {
-            padding: 10px;
-            font-size: 16px;
-            background: #333;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-        .search-container button:hover {
-            background: #444;
-        }
     </style>
 </head>
 <body>
@@ -117,7 +139,7 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="{% url 'homepage' %}">Home</a></li>
+                    <li><a href="{% url 'home' %}">Home</a></li>
                     <li><a href="{% url 'search' %}">Search</a></li>
                 </ul>
             </nav>
@@ -125,29 +147,27 @@
     </header>
 
     <main class="container">
-        <div class="search-container">
-            <form method="get" action="{% url 'search_results' %}">
-                <input type="text" name="query" placeholder="Search for a movie...">
+        <section class="search-section">
+            <h1>Search Movies by Release Year</h1>
+            <form class="search-form" method="GET" action="{% url 'home' %}">
+                <input type="text" name="year" placeholder="Enter release year">
                 <button type="submit">Search</button>
             </form>
-        </div>
+        </section>
 
-        <h1>Search Results</h1>
-        <div class="movie-grid">
-            {% if movies %}
-                {% for movie in movies %}
-                <div class="movie-card">
-                    <a href="{% url 'movie_detail' movie.id %}">
-                        <img src="https://image.tmdb.org/t/p/w500{{ movie.image }}" alt="{{ movie.title }}">
-                        <h2>{{ movie.title }}</h2>
-                    </a>
-                    <p>{{ movie.year_released }}</p>
-                </div>
-                {% endfor %}
-            {% else %}
-                <p>No results found.</p>
-            {% endif %}
-        </div>
+        {% if movies %}
+        <section class="movie-grid">
+            {% for movie in movies %}
+            <div class="movie-card">
+                <img src="https://image.tmdb.org/t/p/w500{{ movie.image }}" alt="{{ movie.title }}">
+                <h2>{{ movie.title }}</h2>
+                <p>{{ movie.year_released }}</p>
+            </div>
+            {% endfor %}
+        </section>
+        {% elif request.GET.year %}
+        <p>No movies found for the year {{ request.GET.year }}.</p>
+        {% endif %}
     </main>
 </body>
 </html>

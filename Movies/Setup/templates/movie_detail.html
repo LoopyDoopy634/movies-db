@@ -61,7 +61,7 @@
             color: #e8491d;
             font-weight: bold;
         }
-        .movie-details {
+        .movie-detail {
             max-width: 800px;
             margin: auto;
             padding: 50px 20px;
@@ -70,22 +70,19 @@
             box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
             margin-top: 50px;
         }
-        .movie-details h1 {
+        .movie-detail h1 {
             margin-bottom: 20px;
         }
-        .movie-details p {
+        .movie-detail p {
             font-size: 18px;
             color: #666;
         }
-        .movie-details img {
-            max-width: 150px; /* Ensure image responsiveness */
+        .movie-detail img {
+            max-width: 200px; /* Adjusted for smaller size */
             height: auto;
             display: block;
             margin: 20px 0;
             border-radius: 10px;
-        }
-        .movie-description {
-            margin-top: 20px;
         }
         .review-section {
             margin-top: 30px;
@@ -116,7 +113,7 @@
             </div>
             <nav>
                 <ul>
-                    <li><a class="nav-link" href="{% url 'homepage' %}">Home</a></li>
+                    <li><a href="{% url 'homepage' %}">Home</a></li>
                     <li><a href="{% url 'search' %}">Search</a></li>
                 </ul>
             </nav>
@@ -124,44 +121,35 @@
     </header>
 
     <main class="container">
-        <section class="movie-details">
+        <div class="movie-detail">
+            <img src="https://image.tmdb.org/t/p/w500{{ movie.image }}" alt="{{ movie.title }}">
             <h1>{{ movie.title }}</h1>
-            <p><strong>Year Released:</strong> {{ movie.year_released }}</p>
-            <p><strong>Director:</strong> {{ movie.director }}</p>
+            <p>{{ movie.year_released }}</p>
             <p>{{ movie.description }}</p>
-            {% if movie.image %}
-            <img src="{{ movie.image.url }}" alt="{{ movie.title }}">
+        </div>
+        <div class="review-section">
+            <h2>User Reviews</h2>
+            {% for review in reviews %}
+            <div class="review">
+                <h4>{{ review.username }}</h4>
+                <p>Rating: {{ review.rating }}</p>
+            </div>
+            {% empty %}
+            <p>No reviews yet.</p>
+            {% endfor %}
+        </div>
+        <div class="review-form">
+            <h2>Submit Your Review</h2>
+            {% if user_review %}
+            <p>You have already reviewed this movie with a rating of {{ user_review.rating }}.</p>
             {% else %}
-            <img src="{% static 'img/placeholder.jpg' %}" alt="Placeholder">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Submit</button>
+            </form>
             {% endif %}
-            <div class="movie-description">
-                
-            </div>
-            <div class="review-section">
-                <h2>User Reviews</h2>
-                {% for review in reviews %}
-                <div class="review">
-                    <h4>{{ review.username }}</h4>
-                    <p>Rating: {{ review.rating }}</p>
-                </div>
-                {% empty %}
-                <p>No reviews yet.</p>
-                {% endfor %}
-            </div>
-            <div class="review-form">
-                <h2>Submit Your Review</h2>
-                {% if user_review %}
-                <p>You have already reviewed this movie with a rating of {{ user_review.rating }}.</p>
-                {% else %}
-                <form method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit">Submit</button>
-                </form>
-                {% endif %}
-            </div>
-        </section>
+        </div>
     </main>
-
 </body>
 </html>
